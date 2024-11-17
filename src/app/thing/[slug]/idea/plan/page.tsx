@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: Props) {
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center">
-			<h1 className="text-5xl font-bold">The Plan</h1>
+			<h1 className="pb-10 text-5xl font-bold">The Plan</h1>
 			<IdeaPlanPage originalIdea={originalIdea} />
 		</main>
 	);
