@@ -8,9 +8,11 @@ export default function HomePage() {
 					building stuff can be hard.
 				</h1>
 				<h2 className="text-xl font-bold tracking-tight text-black">
-					But you've got this {":)"}
+					but you've got this {":)"}
 				</h2>
-				<Button>Let's Do This</Button>
+				<Button className="scale-125 font-bold italic">
+					Let's Do This
+				</Button>
 			</div>
 		</main>
 	);
