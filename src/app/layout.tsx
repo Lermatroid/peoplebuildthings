@@ -24,12 +24,12 @@ export default function RootLayout({
 		<ClerkProvider>
 			<html lang="en" className={`${GeistSans.variable}`}>
 				<body>
-					<SignedOut>
+					{/* <SignedOut>
 						<SignInButton />
 					</SignedOut>
 					<SignedIn>
 						<UserButton />
-					</SignedIn>
+					</SignedIn> */}
 					{children}
 				</body>
 			</html>
