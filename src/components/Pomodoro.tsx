@@ -1,10 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Play, Pause, RotateCcw, PencilRuler, Armchair } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "./ui/input";
 
-export default function Pomodoro({ workTime = 25, breakTime = 5 }) {
+export default function Pomodoro({ defaultWorkTime = 25, defaultBreakTime = 5 }) {
+    const [workTime, setWorkTime] = useState(defaultWorkTime);
+    const [breakTime, setBreakTime] = useState(defaultBreakTime);
     const [time, setTime] = useState(workTime * 60);
     const [isActive, setIsActive] = useState(false);
     const [isWork, setIsWork] = useState(true);
@@ -25,7 +28,7 @@ export default function Pomodoro({ workTime = 25, breakTime = 5 }) {
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isActive, time, isWork]);
+    }, [isActive, time, isWork, workTime, breakTime]);
 
     const toggleTimer = () => setIsActive(!isActive);
 
@@ -38,7 +41,7 @@ export default function Pomodoro({ workTime = 25, breakTime = 5 }) {
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     };
 
     const progress = isWork
@@ -46,18 +49,32 @@ export default function Pomodoro({ workTime = 25, breakTime = 5 }) {
         : ((breakTime * 60 - time) / (breakTime * 60)) * 100;
 
     return (
-        <div className={`flex w-fit items-center p-2 rounded-lg border mx-auto ${isWork ? 'bg-green-100' : 'bg-red-100'}`}>
+        <div
+            className={`mx-auto flex w-fit items-center rounded-lg border p-2 ${isWork ? "bg-green-200" : "bg-red-200"}`}
+        >
             {/* <Progress value={progress} className="w-24 h-2" /> */}
-            <div className="text-center font-mono font-bold text-9xl text-align-middle">{formatTime(time)}</div>
+            <div>
+                <div className="flex justify-around gap-x-4">
+                    <div className="flex items-center gap-2"><PencilRuler /><Input type="text" className="w-16" value={workTime.toString()} onChange={(e) => setWorkTime(Number(e.target.value))} /></div>
+                    <div className="flex items-center gap-2"><Armchair /><Input type="text" className="w-16" value={breakTime.toString()} onChange={(e) => setBreakTime(Number(e.target.value))} /></div>
+                </div>
+                <div className="text-align-middle text-center font-mono text-9xl font-bold">
+                    {formatTime(time)}
+                </div>
+            </div>
             <div className="flex flex-col">
                 <Button
                     // size="icon"
                     variant="ghost"
                     onClick={toggleTimer}
                     className="h-12 w-12"
-                    aria-label={isActive ? 'Pause' : 'Start'}
+                    aria-label={isActive ? "Pause" : "Start"}
                 >
-                    {isActive ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+                    {isActive ? (
+                        <Pause className="h-8 w-8" />
+                    ) : (
+                        <Play className="h-8 w-8" />
+                    )}
                 </Button>
                 <Button
                     // size="icon"
