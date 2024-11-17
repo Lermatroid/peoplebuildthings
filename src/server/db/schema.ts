@@ -22,3 +22,10 @@ export const ideasTable = sqliteTable("ideas", (t) => ({
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
 }));
+
+export const thingsTable = sqliteTable("things", (t) => ({
+	id: t.integer().primaryKey(),
+	ideaId: t.integer().references(() => ideasTable.id),
+	plan: t.text().notNull().default(""),
+	currentStage: t.text().notNull().default("idea"),
+}));
