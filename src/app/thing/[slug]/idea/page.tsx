@@ -2,21 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface Idea {
 	id: number;
 	text: string;
 }
 
-// const mockIdeas: Idea[] = [
-// 	{ id: 1, text: "Build a rocket ship to Mars" },
-// 	{ id: 2, text: "Create a social network for pets" },
-// 	{ id: 3, text: "Develop a time machine" },
-// 	{ id: 4, text: "Invent a teleportation device" },
-// 	{ id: 5, text: "Design a flying car" },
-// ];
-
 export default function IdeaPage() {
+	const router = useRouter();
 	const [shownIdeas, setShownIdeas] = useState<Idea[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
@@ -46,14 +40,17 @@ export default function IdeaPage() {
 			} else if (event.code === "Enter") {
 				event.preventDefault();
 				if (shownIdeas.length > 0) {
-					alert(`Idea selected: ${shownIdeas[0]?.text}`);
+					const currentIdea = shownIdeas[0];
+					router.push(
+						`${window.location.pathname}/plan?idea=${currentIdea?.id}`,
+					);
 				}
 			}
 		};
 
 		window.addEventListener("keydown", handleKeyPress);
 		return () => window.removeEventListener("keydown", handleKeyPress);
-	}, [isLoading, shownIdeas]);
+	}, [isLoading, shownIdeas, router]);
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-between">
