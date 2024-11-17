@@ -1,3 +1,5 @@
+import Pomodoro from "@/components/Pomodoro";
+
 export default function HomePage() {
-	return <div>Home</div>;
+    return <div ><Pomodoro workTime={.5} breakTime={.1} /></div>;
 }
